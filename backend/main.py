@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from data_processor import load_all_data
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="LILA Player Journey API")
 
