@@ -7,15 +7,14 @@ app = FastAPI(title="LILA Player Journey API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://telemetry-visualizer.vercel.app",  # NO trailing slash!
-        "http://localhost:5173"                     # Allows local testing
+        "https://telemetry-visualizer.vercel.app",
+        "http://localhost:5173"
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Load data into memory when server starts
 df = load_all_data()
 
 @app.get("/")
@@ -46,8 +45,7 @@ def get_events(
         filtered_df = filtered_df[filtered_df['date'] == date]
     if match_id:
         filtered_df = filtered_df[filtered_df['match_id'] == match_id]
-        
-    # Sort by timestamp so the timeline playback works perfectly
+
     filtered_df = filtered_df.sort_values(by='ts')
-        
+
     return filtered_df.to_dict(orient="records")
