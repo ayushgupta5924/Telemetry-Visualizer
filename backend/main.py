@@ -6,7 +6,10 @@ app = FastAPI(title="LILA Player Journey API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://telemetry-visualizer.vercel.app",  # NO trailing slash!
+        "http://localhost:5173"                     # Allows local testing
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
