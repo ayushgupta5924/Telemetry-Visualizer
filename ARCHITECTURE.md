@@ -18,10 +18,12 @@
 3. **Delivery:** The frontend fetches the pre-calculated JSON array and passes it directly to Deck.gl's `ScatterplotLayer` and `HeatmapLayer`.
 
 ## Major Trade-offs & Decisions
+
 | Trade-off | Decision | Justification |
 | :--- | :--- | :--- |
 | **Server-Side vs Client-Side Math** | Server-Side | Pre-calculating `pixel_x` and `pixel_y` on the FastAPI backend increases memory usage slightly but drastically reduces CPU load on the React frontend, allowing for smoother animation. |
 | **GPU vs CPU Timeline Filtering** | Hybrid | Deck.gl's `DataFilterExtension` pushes the timeline slider filtering to the GPU for the path rendering (extreme performance). However, due to a known WebGL shader quirk with flat Cartesian heatmaps, the heatmap data is CPU-filtered before rendering to ensure stability. |
+| **Payload Size vs. Scrubbing Speed** | Full JSON Payload | Sent the entire ~89,000-event JSON payload to the client to enable immediate, offline-like timeline scrubbing without constant server pings. This results in a heavy initial network load and slight CPU lag when filtering heatmap states on the main thread. *Future mitigation: Transition to a binary protocol (Protobuf) for ingestion and debounce the timeline slider.* |
 
 ## Assumptions
 * Based on the `user_id` formatting, it was assumed that any purely numeric string indicated a Bot, while UUIDs indicated Human players. This boolean flag (`is_bot`) was attached at the ingestion layer.
