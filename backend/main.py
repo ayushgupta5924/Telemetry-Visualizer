@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from data_processor import load_all_data
-from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="LILA Player Journey API")
 
@@ -48,10 +47,5 @@ def get_events(
         filtered_df = filtered_df[filtered_df['match_id'] == match_id]
 
     filtered_df = filtered_df.sort_values(by='ts')
-<<<<<<< HEAD
 
     return filtered_df.to_dict(orient="records")
-=======
-        
-    return filtered_df.to_dict(orient="records")
->>>>>>> 6382a5eda8808d73a0b126e829e12dbd1e62066e
