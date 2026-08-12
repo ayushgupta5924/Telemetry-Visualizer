@@ -28,7 +28,7 @@ function App() {
   const [viewMode, setViewMode] = useState('paths');
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/filters')
+    fetch('https://telemetry-visualizer.onrender.com/api/filters')
       .then(res => res.json())
       .then(data => setFilters(data))
       .catch(err => console.error("Filter fetch error:", err));
@@ -41,7 +41,7 @@ function App() {
     if (selectedDate) params.append('date', selectedDate);
     if (selectedMatch) params.append('match_id', selectedMatch);
 
-    fetch(`http://127.0.0.1:8000/api/events?${params.toString()}`)
+    fetch(`https://telemetry-visualizer.onrender.com/api/events?${params.toString()}`)
       .then(res => res.json())
       .then(data => {
         const parsedData = data.map(d => ({
